@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//using Scripts.fictionLapseMovie;
+
 public class movieController : MonoBehaviour {
 	string movieName1 = "lab1";
 	string movieName2 = "lab2"; 
@@ -14,6 +16,7 @@ public class movieController : MonoBehaviour {
 
 	bool isLapse = false;
 	int lapseCount = 0;
+	FictionLapseMovie fictionMovie = new FictionLapseMovie();
 
 	int movieStatus = 0;
 
@@ -31,33 +34,38 @@ public class movieController : MonoBehaviour {
 		movieTexture1 = (MovieTexture)Resources.Load (movieName1, typeof(MovieTexture)); 
 		movieTexture1.loop = true;
 		movieTexture2 = (MovieTexture)Resources.Load (movieName2, typeof(MovieTexture));
-		movieTexture2.loop = true; 
-
+		movieTexture2.loop = true;  
 	}
 
 	void Update () {
 		if (isLapse) {
-			UpdateLapseImage();
+			//UpdateLapseImage();
+			//ren.material.mainTexture = fictionMovie.update();
+			Debug.Log(fictionMovie.update());
 		}
 
 		if (Input.GetKey (KeyCode.A)) {
-			stopMovieImage();
+			stopMovieImage ();
 			movieStatus = 0;
 			ren.material.mainTexture = movieTexture1;
-			movieTexture1.Play();
+			movieTexture1.Play ();
 		} else if (Input.GetKey (KeyCode.S)) {
-			stopMovieImage();
+			stopMovieImage ();
 			movieStatus = 1;
 			ren.material.mainTexture = movieTexture2;
-			movieTexture2.Play();
+			movieTexture2.Play ();
 		} else if (Input.GetKey (KeyCode.D)) { 
-			stopMovieImage();
+			stopMovieImage ();
 			movieStatus = 2;
 			isLapse = true;
 		} else if (Input.GetKey (KeyCode.F)) {  
-			audioSources[0].Stop();
-			audioSources[1].Play ();
+			audioSources [0].Stop ();
+			audioSources [1].Play ();
+		} else if (Input.GetKey (KeyCode.G)) {
+			fictionMovie.changeLapseState();
 		}
+
+		Debug.Log (fictionMovie.state);
 	}
 
 	void stopMovieImage() {
